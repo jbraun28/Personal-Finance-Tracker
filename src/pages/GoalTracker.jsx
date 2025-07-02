@@ -1,6 +1,7 @@
-import React, { useEffect, useState, useRef, useContext } from 'react';
+import React, { useEffect, useState} from 'react';
+import {useWindowSize} from 'react-use';
 import {TableContainer, Table, TableHead, TableBody, TableRow, TableCell} from '@mui/material';
-
+import Confetti from "react-confetti";
 
 export default function GoalTracker() {
 
@@ -35,11 +36,21 @@ export default function GoalTracker() {
     if (!row.required || !row.saved) {
       return "🤔";
     }
-
     //otherwise, update status accordingly
     const progress = (row.saved / row.required * 100);
     return progress < 100 ? "🚧 (In Progress)" : "✅ (Completed)";
   }
+
+  const { width, height } = useWindowSize();
+  
+  const getConfetti = (row) => {
+    if (!row.required || !row.saved) {
+      return null;
+    }
+    const progress = (row.saved / row.required * 100); 
+    return progress >= 100 ? <Confetti width={width} height={height} />  : null;
+  }
+  
 
   useEffect(() => {
     localStorage.setItem(local_storage_key, JSON.stringify(rows));
@@ -126,7 +137,8 @@ export default function GoalTracker() {
               <TableCell>
                 <progress 
                 value={(row.required || row.saved) ? (row.saved / row.required * 100): 0 }
-                max={100}>
+                max={100}
+                onChange={(e) => handleInputChange(rowIdx, 'progress', e)}>
                 </progress>
               </TableCell>
               <TableCell>
@@ -135,7 +147,7 @@ export default function GoalTracker() {
               <TableCell>
                 <button onClick={() => handleDeleteRow(rowIdx)}>Delete Row</button>
               </TableCell>
-            
+              {getConfetti(row)}
             </TableRow>
            
 
