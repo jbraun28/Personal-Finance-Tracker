@@ -3,6 +3,9 @@ import {TableContainer, Table, TableHead, TableBody, TableRow, TableCell} from '
 
 export default function GoalTracker() {
 
+  //for local storage
+  const local_storage_key = "goal-table"
+
   //table labels
   const columns = ["#", "Goal", "TimeFrame", "Status", "Actions"];
   
@@ -17,7 +20,15 @@ export default function GoalTracker() {
       });
   }
 
-  const [rows, setRows] = useState(initialRows);
+  const [rows, setRows] = useState(() => {
+    const savedRows = localStorage.getItem(local_storage_key);
+    return savedRows ? JSON.parse(savedRows) : initialRows
+  });
+
+  useEffect(() => {
+    localStorage.setItem(local_storage_key, JSON.stringify(rows));
+  }, [rows]);
+
 
   //event handler for user changes
   const handleInputChange = (idx, col, e) => {
@@ -65,6 +76,9 @@ export default function GoalTracker() {
                 <input
                 type='text'
                 value={row.goal}
+                placeholder='E.g. Save $1000 for London trip in March'
+                style={{width: '250px', textWrap: 'wrap'}}
+                
                 onChange={(e) => handleInputChange(rowIdx, 'goal', e)}>
                 </input>
               </TableCell>
