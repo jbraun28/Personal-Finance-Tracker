@@ -29,6 +29,18 @@ export default function GoalTracker() {
     return savedRows ? JSON.parse(savedRows) : initialRows
   });
 
+
+  const getStatus = (row) => {
+    //if user hasn't input either money required or money saved, output confused emoji
+    if (!row.required || !row.saved) {
+      return "🤔";
+    }
+
+    //otherwise, update status accordingly
+    const progress = (row.saved / row.required * 100);
+    return progress < 100 ? "🚧 (In Progress)" : "✅ (Completed)";
+  }
+
   useEffect(() => {
     localStorage.setItem(local_storage_key, JSON.stringify(rows));
   }, [rows]);
@@ -63,7 +75,7 @@ export default function GoalTracker() {
   return (
     <div>
       <div>
-        <h1>Stay on top of your financial goals</h1>
+        <h1>✨What are you saving towards?✨</h1>
       </div>
       <Table>
         <TableHead>
@@ -118,12 +130,7 @@ export default function GoalTracker() {
                 </progress>
               </TableCell>
               <TableCell>
-                <select value={row.status}
-                onChange={(e) => handleInputChange(rowIdx, 'status', e)}>
-                  <option value="">Select Status</option>
-                  <option value="Complete">✅ (Completed)</option>
-                  <option value="In Progress">🚧 (In Progress)</option>
-                </select>
+                {getStatus(row)}
               </TableCell>
               <TableCell>
                 <button onClick={() => handleDeleteRow(rowIdx)}>Delete Row</button>
