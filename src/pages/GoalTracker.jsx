@@ -4,7 +4,7 @@ import {TableContainer, Table, TableHead, TableBody, TableRow, TableCell} from '
 export default function GoalTracker() {
 
   //table labels
-  const columns = ["#", "Goal", "TimeFrame", "Status"];
+  const columns = ["#", "Goal", "TimeFrame", "Status", "Actions"];
   
   //start with an array
   const initialRows = [];
@@ -38,6 +38,13 @@ export default function GoalTracker() {
     setRows([...rows, newRow]) //add the new row to a shallow copy of current rows
   }
 
+  //event handler for deleting rows
+  const handleDeleteRow = (rowIdxToDelete) => {
+    const updatedRows = rows.filter((row,idx) => idx !== rowIdxToDelete);
+    setRows(updatedRows);
+   
+  }
+
   return (
     <div>
       <div>
@@ -56,7 +63,7 @@ export default function GoalTracker() {
         <TableBody>
           {rows.map((row, rowIdx) => (
             <TableRow key={row.id}>
-              <TableCell>{row.id}</TableCell>
+              <TableCell>{rowIdx+1}</TableCell>
               <TableCell>
                 <input
                 type='text'
@@ -72,13 +79,17 @@ export default function GoalTracker() {
                 </input>
               </TableCell>
               <TableCell>
-              <select name="selectedStatus">
-                <option value="None">Select Status</option>
-                <option value="Complete">✅ (Completed)</option>
-                <option value="In Progress">🚧 (In Progress)</option>
-              </select>
+                <select value={row.status}
+                onChange={(e) => handleInputChange(rowIdx, 'status', e)}>
+                  <option value="">Select Status</option>
+                  <option value="Complete">✅ (Completed)</option>
+                  <option value="In Progress">🚧 (In Progress)</option>
+                </select>
               </TableCell>
-
+              <TableCell>
+                <button onClick={() => handleDeleteRow(rowIdx)}>Delete Row</button>
+              </TableCell>
+            
             </TableRow>
            
 
