@@ -1,13 +1,14 @@
 import React, { useEffect, useState, useRef, useContext } from 'react';
 import {TableContainer, Table, TableHead, TableBody, TableRow, TableCell} from '@mui/material';
 
+
 export default function GoalTracker() {
 
   //for local storage
   const local_storage_key = "goal-table"
 
   //table labels
-  const columns = ["#", "Goal", "TimeFrame", "Status", "Actions"];
+  const columns = ["#", "Goal", "TimeFrame", "Required", "Saved", "Progress",  "Status", "Actions"];
   
   //start with an array
   const initialRows = [];
@@ -15,8 +16,11 @@ export default function GoalTracker() {
     initialRows.push(
       {
         goal: '',
+        required: 0,
+        saved: 0,
         timeframe: '',
-        status: ''
+        progress: '',
+        status: '',
       });
   }
 
@@ -33,7 +37,7 @@ export default function GoalTracker() {
   //event handler for user changes
   const handleInputChange = (idx, col, e) => {
     const updatedRows = [...rows]; //make a shallow copy of the current set of rows
-    updatedRows[idx][col] = e.target.value;
+    updatedRows[idx][col] = e.target.value; 
     setRows(updatedRows);
   }
 
@@ -41,7 +45,10 @@ export default function GoalTracker() {
   const handleAddRow = () => {
     const newRow = {
       goal: '',
+      required: 0,
+      saved: 0,
       timeframe: '',
+      progress: '',
       status: ''
     };
     setRows([...rows, newRow]) //add the new row to a shallow copy of current rows
@@ -76,9 +83,8 @@ export default function GoalTracker() {
                 <input
                 type='text'
                 value={row.goal}
-                placeholder='E.g. Save $1000 for London trip in March'
+                placeholder='E.g. Save $1000 for trip to London in March'
                 style={{width: '250px', textWrap: 'wrap'}}
-                
                 onChange={(e) => handleInputChange(rowIdx, 'goal', e)}>
                 </input>
               </TableCell>
@@ -88,6 +94,28 @@ export default function GoalTracker() {
                 value={row.timeframe}
                 onChange={(e) => handleInputChange(rowIdx, 'timeframe', e)}>
                 </input>
+              </TableCell>
+              <TableCell>
+                <input
+                type='number'
+                value={row.required}
+                placeholder='E.g. 1000'
+                onChange={(e) => handleInputChange(rowIdx, 'required', e)}>
+                </input>
+              </TableCell>
+              <TableCell>
+                <input
+                type='number'
+                value={row.saved}
+                placeholder='E.g. 500'
+                onChange={(e) => handleInputChange(rowIdx, 'saved', e)}>
+                </input>
+              </TableCell>
+              <TableCell>
+                <progress 
+                value={(row.required || row.saved) ? (row.saved / row.required * 100): 0 }
+                max={100}>
+                </progress>
               </TableCell>
               <TableCell>
                 <select value={row.status}

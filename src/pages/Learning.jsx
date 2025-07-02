@@ -21,7 +21,7 @@ export default function Learning() {
 
   return (
     <div>
-      <h1 style={{color: 'blue'}}>Learn more about personal finance!</h1>
+      <h1 style={{color: 'blue'}}>Learn more about personal finance</h1>
       <h2>Check out the below educational links to learn more about personal finance.
       </h2>
       <TableContainer component={Paper} style={{width: '600px', margin: 'auto'}}>
