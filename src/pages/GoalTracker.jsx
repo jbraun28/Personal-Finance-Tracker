@@ -11,7 +11,6 @@ export default function GoalTracker() {
   for (let i = 0; i < 5; i++) {
     initialRows.push(
       {
-        id: i+1,
         goal: '',
         timeframe: '',
         status: ''
@@ -30,7 +29,6 @@ export default function GoalTracker() {
   //event handler for adding rows
   const handleAddRow = () => {
     const newRow = {
-      id: rows.length + 1,
       goal: '',
       timeframe: '',
       status: ''
@@ -42,7 +40,6 @@ export default function GoalTracker() {
   const handleDeleteRow = (rowIdxToDelete) => {
     const updatedRows = rows.filter((row,idx) => idx !== rowIdxToDelete);
     setRows(updatedRows);
-   
   }
 
   return (
@@ -62,7 +59,7 @@ export default function GoalTracker() {
         </TableHead>
         <TableBody>
           {rows.map((row, rowIdx) => (
-            <TableRow key={row.id}>
+            <TableRow key={rowIdx}>
               <TableCell>{rowIdx+1}</TableCell>
               <TableCell>
                 <input
