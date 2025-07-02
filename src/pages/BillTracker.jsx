@@ -60,8 +60,8 @@ function BillTracker() {
 
   return (
     <div>
-      <h1>Track your bills</h1>
-      <button onClick={handleAddRow}> Add Row </button>
+      <h2>Track your bills</h2>
+      
      <Table>
       {/** table headers */}
       <TableHead>
@@ -98,6 +98,8 @@ function BillTracker() {
 
       </TableBody>
      </Table>
+     <p></p>
+     <button onClick={handleAddRow}> Add Row </button>
     </div>
   )
 }
