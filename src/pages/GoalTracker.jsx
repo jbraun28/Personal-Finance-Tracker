@@ -1,6 +1,6 @@
 import React, { useEffect, useState} from 'react';
 import {useWindowSize} from 'react-use';
-import {TableContainer, Table, TableHead, TableBody, TableRow, TableCell} from '@mui/material';
+import {Table, TableHead, TableBody, TableRow, TableCell} from '@mui/material';
 import Confetti from "react-confetti";
 
 export default function GoalTracker() {
