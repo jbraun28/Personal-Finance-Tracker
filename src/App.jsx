@@ -5,7 +5,6 @@ import { AppBar, Container, Toolbar, Typography } from '@mui/material';
 import { NavLink } from 'react-router-dom';
 
 import HomePage from './pages/HomePage';
-import ExpenseTracker from './pages/ExpenseTracker';
 import BillTracker from './pages/BillTracker';
 import BudgetTracker from './pages/BudgetTracker';
 import GoalTracker from './pages/GoalTracker';
@@ -42,7 +41,6 @@ export default function App() {
       <Container maxWidth="xl">
         <Toolbar disableGutters> 
           <NavText href="/" text="HOMEPAGE" />
-          <NavText href="/expense-tracker" text="EXPENSES"/>
           <NavText href="/budget-tracker" text="BUDGET"/>
           <NavText href="/bill-tracker" text="BILLS"/>
           <NavText href="/goal-tracker" text="GOALS"/>
@@ -53,7 +51,6 @@ export default function App() {
 
     <Routes>
       <Route path="/" element={<HomePage />} />
-      <Route path="/expense-tracker" element={<ExpenseTracker />} />
       <Route path="/budget-tracker" element={<BudgetTracker />} />
       <Route path="/bill-tracker" element={<BillTracker/>} />
       <Route path="/goal-tracker" element={<GoalTracker />} />
